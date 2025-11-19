@@ -56,6 +56,5 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build"
-    /* ^^^^^ Perbaikan: Menambahkan 'tsc &&' untuk TypeScript */
   }
 }

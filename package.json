@@ -5,8 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    // KRITIS: Ubah dari "tsc && vite build" menjadi "vite build" saja.
-    // Ini akan mengatasi kegagalan build (exit code 1) yang disebabkan oleh TypeScript.
+    
     "build": "vite build", 
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"

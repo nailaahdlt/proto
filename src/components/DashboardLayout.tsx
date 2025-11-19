@@ -23,7 +23,10 @@ import { JadwalPage } from './JadwalPage';
 import { LayananAkademikPage } from './LayananAkademikPage';
 import { PengaturanPage } from './PengaturanPage';
 import { LaporanPage } from './LaporanPage';
-import logoEduSys from 'figma:asset/b9b09e3898d01e94f9ee7b85f156bf9d1964f528.png';
+
+// --- PERBAIKAN KRITIS: Mengganti impor Figma yang menyebabkan crash dengan placeholder URL ---
+const logoEduSys = "https://placehold.co/40x40/ffffff/000000?text=LOGO";
+// --- END PERBAIKAN ---
 
 interface DashboardLayoutProps {
   user: User;

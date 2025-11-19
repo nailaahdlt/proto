@@ -2,19 +2,17 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <!-- Menggunakan path relatif "./" -->
-    <link rel="icon" type="image/svg+xml" href="./vite.svg" /> 
+    <!-- Vite akan secara otomatis menyuntikkan <link rel="icon"...> di sini -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
-    <!-- MENGGUNAKAN PATH RELATIF UNTUK CSS -->
-    <link rel="stylesheet" href="./src/index.css" />
-
     <title>Wireframe Dashboard EduSys</title>
+    
+    <!-- PENTING: Vite akan menyuntikkan link ke file CSS global Anda (misalnya, index.css) di sini -->
   </head>
-
   <body>
+    <!-- Root element tempat aplikasi React Anda akan di-mount -->
     <div id="root"></div>
-    <!-- MENGGUNAKAN PATH RELATIF UNTUK ENTRY POINT JS/TSX -->
-    <script type="module" src="./src/main.tsx"></script>
+    
+    <!-- PENTING: Vite akan menyuntikkan link ke file JavaScript bundle Anda (misalnya, index-xyz.js) di sini -->
+    <!-- Tidak perlu lagi menyertakan <script type="module" src="./src/main.tsx"></script> -->
   </body>
 </html>

@@ -1,41 +1,52 @@
-name: Deploy static content to Pages
+name: Deploy Web App to GitHub Pages
 
 on:
   push:
-    branches: ["main"] # Ganti dengan nama branch utama Anda (misalnya: master)
+    branches: ["main"] # Pastikan ini adalah nama branch utama Anda (misalnya: master)
+  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+# Grant GITHUB_TOKEN the necessary permissions
 permissions:
   contents: read
   pages: write
   id-token: write
 
 jobs:
-  # Konfigurasi pekerjaan deployment Anda di sini
-  deploy:
+  build_and_deploy:
+    # Set environment name for GitHub Pages tracking
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
+      
+    runs-on: ubuntu-latest # Specify the runner environment
+
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Setup Node.js (jika proyek Anda butuh build)
+      - name: ⬇️ Checkout Repository
+        uses: actions/checkout@v4 # Get the code from your repository
+
+      - name: ⚙️ Setup Node.js Environment
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
-      - name: Install dependencies (jika proyek Anda butuh build)
+          node-version: '20' # Gunakan versi Node.js yang sesuai dengan proyek Anda
+          cache: 'npm' # Menggunakan cache untuk dependensi NPM
+          
+      - name: Install Dependencies
         run: npm install
-      - name: Build project (jika proyek Anda butuh build)
-        run: npm run build
-      - name: Setup Pages
+
+      - name:  Build Project
+        
+        run: npm run build 
+
+      - name:  Setup GitHub Pages
         uses: actions/configure-pages@v4
-      - name: Upload artifact
+        
+     
+      - name: Upload Deployment Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Direktori hasil build Anda, ganti dengan 'build' atau 'dist' jika berbeda
-          path: './out' 
-      - name: Deploy to GitHub Pages
+          path: './dist' 
+
+      - name: 🚀 Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

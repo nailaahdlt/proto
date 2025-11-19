@@ -1,12 +1,13 @@
-name: Deploy Web App to GitHub Pages
+name: Deploy Wireframe Dashboard (Vite/TS) to GitHub Pages
 
 on:
+  # Akan berjalan ketika ada push ke branch 'main'
   push:
-    branches: ["main"] # Pastikan ini adalah nama branch utama Anda (misalnya: master)
-  # Allows you to run this workflow manually from the Actions tab
+    branches: ["main"] 
+  # Mengizinkan eksekusi manual
   workflow_dispatch:
 
-# Grant GITHUB_TOKEN the necessary permissions
+# Berikan izin yang diperlukan untuk deployment ke GitHub Pages
 permissions:
   contents: read
   pages: write
@@ -14,38 +15,38 @@ permissions:
 
 jobs:
   build_and_deploy:
-    # Set environment name for GitHub Pages tracking
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
       
-    runs-on: ubuntu-latest # Specify the runner environment
+    runs-on: ubuntu-latest # Menggunakan runner terbaru
 
     steps:
       - name: ⬇️ Checkout Repository
-        uses: actions/checkout@v4 # Get the code from your repository
+        uses: actions/checkout@v4 # Mengambil kode
 
       - name: ⚙️ Setup Node.js Environment
         uses: actions/setup-node@v4
         with:
-          node-version: '20' # Gunakan versi Node.js yang sesuai dengan proyek Anda
-          cache: 'npm' # Menggunakan cache untuk dependensi NPM
+          node-version: '20' # Gunakan versi Node.js yang direkomendasikan
+          cache: 'npm' # Menggunakan cache untuk dependensi
           
-      - name: Install Dependencies
+      - name: 📦 Install Dependencies
         run: npm install
 
-      - name:  Build Project
-        
-        run: npm run build 
+      - name: 🔨 Build Project (Run tsc && vite build)
+        # Perintah ini akan menjalankan "tsc && vite build" dari package.json.
+        # Jika ada error, ini kemungkinan besar karena Type Error di kode sumber Anda.
+        run: npm run build
 
-      - name:  Setup GitHub Pages
+      - name: 📄 Setup GitHub Pages
         uses: actions/configure-pages@v4
         
-     
-      - name: Upload Deployment Artifact
+      # PERUBAHAN PENTING: Menggunakan './build' sesuai outDir di vite.config.ts
+      - name: ⬆️ Upload Deployment Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './dist' 
+          path: './build' # <<< DIREKTORI OUTPUT YANG BENAR
 
       - name: 🚀 Deploy to GitHub Pages
         id: deployment

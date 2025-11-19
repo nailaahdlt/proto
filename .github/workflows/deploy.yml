@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ main ] # Ganti 'main' jika branch utama Anda 'master'
+    branches: [ main ] 
 
 jobs:
   build-and-deploy:
@@ -13,20 +13,21 @@ jobs:
     - name: Checkout 
       uses: actions/checkout@v4
 
-    - name: Set up Node.js 
+    - name: Setup Node
       uses: actions/setup-node@v4
       with:
-        node-version: '20' # Gunakan versi Node yang stabil
+        node-version: '18' # Paling aman menggunakan Node 18
 
-    - name: Install dependencies
+    - name: Install Dependencies
       run: npm install
 
-    - name: Build project
+    - name: Build Project
       run: npm run build
 
-    # PENTING: Langkah ini yang memberitahu GitHub Pages di mana folder outputnya
     - name: Deploy to Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./build # Ubah jika folder Anda bernama 'dist' atau yang lain
+        # PENTING: Jika folder build Anda bernama 'build', biarkan seperti ini. 
+        # Jika Vite membuat folder 'dist', ubah ke './dist'
+        publish_dir: ./build

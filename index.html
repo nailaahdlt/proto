@@ -6,13 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Wireframe Dashboard EduSys</title>
     
-    <!-- PENTING: Vite akan menyuntikkan link ke file CSS global Anda (misalnya, index.css) di sini -->
+    <!-- Vite akan menyuntikkan CSS dan JS yang telah dibundel di sini -->
   </head>
   <body>
     <!-- Root element tempat aplikasi React Anda akan di-mount -->
     <div id="root"></div>
     
-    <!-- PENTING: Vite akan menyuntikkan link ke file JavaScript bundle Anda (misalnya, index-xyz.js) di sini -->
-    <!-- Tidak perlu lagi menyertakan <script type="module" src="./src/main.tsx"></script> -->
+    <!-- Tag script ini adalah KRITIS, karena menghubungkan HTML ke entry point JavaScript/TypeScript (main.tsx) -->
+    <!-- Atribut type="module" diperlukan untuk proyek modern (ESM) seperti Vite -->
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

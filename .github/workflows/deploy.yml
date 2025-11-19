@@ -1,45 +1,60 @@
-# .github/workflows/deploy.yml
-name: Deploy Frontend
-
-on:
-  push:
-    # Memicu deployment ketika ada push ke branch 'main'
-    branches: [ main ] 
-
-jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v4
-      # KRUSIAL: Agar submodul dan LFS (jika ada) ikut ter-checkout
-      with:
-        submodules: true
-
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-        # Menggunakan versi Node yang aman dan stabil
-        node-version: '18' 
-        # Menggunakan cache NPM
-        cache: 'npm'
-
-    - name: Install Dependencies
-      # Menginstal semua paket dari package.json
-      run: npm install
-
-    - name: Build Project (Mengatasi 'Permission Denied')
-      # Perintah yang aman untuk menjalankan script build di lingkungan Linux
-      run: npm run build --if-present
-
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        # PENTING: Folder yang di-deploy (sinkron dengan build.outDir: 'build' di vite.config.ts)
-        publish_dir: ./build 
-        # Mengatur base path secara otomatis untuk deployment
-        # Ini akan menjadi /proto/ sesuai nama repo Anda
-        base_url: /${{ github.event.repository.name }}
-        force_orphan: true
+{
+  "name": "wireframe-dashboard-edusys",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@radix-ui/react-accordion": "^1.2.3",
+    "@radix-ui/react-alert-dialog": "^1.1.6",
+    "@radix-ui/react-aspect-ratio": "^1.1.2",
+    "@radix-ui/react-avatar": "^1.1.3",
+    "@radix-ui/react-checkbox": "^1.1.4",
+    "@radix-ui/react-collapsible": "^1.1.3",
+    "@radix-ui/react-context-menu": "^2.2.6",
+    "@radix-ui/react-dialog": "^1.1.6",
+    "@radix-ui/react-dropdown-menu": "^2.1.6",
+    "@radix-ui/react-hover-card": "^1.1.6",
+    "@radix-ui/react-label": "^2.1.2",
+    "@radix-ui/react-menubar": "^1.1.6",
+    "@radix-ui/react-navigation-menu": "^1.2.5",
+    "@radix-ui/react-popover": "^1.1.6",
+    "@radix-ui/react-progress": "^1.1.2",
+    "@radix-ui/react-radio-group": "^1.2.3",
+    "@radix-ui/react-scroll-area": "^1.2.3",
+    "@radix-ui/react-select": "^2.1.6",
+    "@radix-ui/react-separator": "^1.1.2",
+    "@radix-ui/react-slider": "^1.2.3",
+    "@radix-ui/react-slot": "^1.1.2",
+    "@radix-ui/react-switch": "^1.1.3",
+    "@radix-ui/react-tabs": "^1.1.3",
+    "@radix-ui/react-toggle": "^1.1.2",
+    "@radix-ui/react-toggle-group": "^1.1.2",
+    "@radix-ui/react-tooltip": "^1.1.8",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "*",
+    "cmdk": "^1.1.1",
+    "embla-carousel-react": "^8.6.0",
+    "input-otp": "^1.4.2",
+    "lucide-react": "^0.487.0",
+    "next-themes": "^0.4.6",
+    "react": "^18.3.1",
+    "react-day-picker": "^8.10.1",
+    "react-dom": "^18.3.1",
+    "react-hook-form": "^7.55.0",
+    "react-resizable-panels": "^2.1.7",
+    "recharts": "^2.15.2",
+    "sonner": "^2.0.3",
+    "tailwind-merge": "*",
+    "vaul": "^1.1.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@vitejs/plugin-react-swc": "^3.10.2",
+    "typescript": "^5.5.3", 
+    "vite": "6.3.5"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build"
+  }
+}

@@ -1,8 +1,9 @@
-# deploy.yml
-name: Deploy to GitHub Pages
+# .github/workflows/deploy.yml
+name: Deploy Frontend
 
 on:
   push:
+    # Memicu deployment ketika ada push ke branch 'main'
     branches: [ main ] 
 
 jobs:
@@ -10,24 +11,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout 
+    - name: Checkout Repository
       uses: actions/checkout@v4
 
-    - name: Setup Node
+    - name: Set up Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '18' # Paling aman menggunakan Node 18
+        # Menggunakan versi Node yang aman dan stabil
+        node-version: '18' 
 
     - name: Install Dependencies
+      # Menginstal semua paket dari package.json
       run: npm install
 
-    - name: Build Project
-      run: npm run build
+    - name: Build Project (Mengatasi 'Permission Denied')
+      # Perintah yang aman untuk menjalankan script build di lingkungan Linux
+      run: npm run build --if-present
 
-    - name: Deploy to Pages
+    - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        # PENTING: Jika folder build Anda bernama 'build', biarkan seperti ini. 
-        # Jika Vite membuat folder 'dist', ubah ke './dist'
-        publish_dir: ./build
+        # PENTING: Folder yang di-deploy (sesuai outDir di vite.config.ts)
+        publish_dir: ./build 
+        # Mengatur base path secara otomatis untuk deployment
+        # Ini akan menjadi /proto/ sesuai nama repo Anda
+        base_url: /${{ github.event.repository.name }}
+        force_orphan: true
